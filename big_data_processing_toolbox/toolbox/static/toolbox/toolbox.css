@@ -1,0 +1,59 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    background-color: rgb(221, 233, 226);
+}
+#container {
+    height: 100%;
+    justify-content: center;
+    padding: 30px;
+    border: 2px solid;
+}
+#title-txt {
+    background-color: rgb(231, 238, 222);
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-right: 10px;
+    border: 2px solid;
+    margin-bottom: 30px;
+    height: 10%;
+    font-size: x-large;
+    text-align: center;
+}
+#other-txt {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-right: 10px;
+    margin-bottom: 30px;
+    height: 10%;
+    font-size: large;
+}
+#buttons-area {
+    height: 65%;
+    justify-content: center;
+}
+.row {
+    display: flex; /* to make horizontal layout */
+    height: 25%;
+}
+button {
+    flex: 1;  /*to spread over the layout */
+    font-size:large;
+    border: 2px solid;
+    border-radius: 15px;
+    margin: 5px;
+    background-color: rgb(231, 238, 222);
+    justify-content: center;
+}
+.op_button{
+    background-color:rgb(240, 222, 206);
+}
+button:hover {
+    background-color: gray;
+    border-radius: 15px;
+}
+button:active {
+    background-color: green;
+    border-radius: 15px;
+}

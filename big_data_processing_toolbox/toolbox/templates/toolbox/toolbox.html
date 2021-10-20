@@ -1,0 +1,36 @@
+﻿<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Big Data Processing Toolbox</title>
+        <link rel="stylesheet" href="/static/toolbox/toolbox.css">
+    </head>
+
+    <body>
+        <div id="container">
+            <div id="text-area">
+                <div id="title-txt">
+                    <p>Welcome to Big Data Porcessing Application</p>
+                </div>
+                <div id="other-txt">
+                    <p>Please type the number that corresponds to which application you would like to run:</p>
+                </div>
+            </div>
+
+            <div id="buttons-area">
+                <div class="row">
+                    <button type="submit" onclick="location.href='{% url 'openHadoop' %}'">Apache Hadoop</button>
+                </div>
+                <div class="row">
+                    <button type="submit" onclick="location.href='{% url 'openSpark' %}'">Apache Spark</button>
+                </div>
+                <div class="row">
+                    <button type="submit" onclick="location.href='{% url 'openJupyNotebook' %}'">Jupyter Notebook</button>
+                </div>
+                <div class="row">
+                    <button type="submit" onclick="location.href='{% url 'openSonar' %}'">SonarQube and SonarScanner</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
