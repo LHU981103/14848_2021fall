@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\toolbox",
+    "\\toolbox\\static",
+    "\\toolbox\\static\\toolbox",
+    "\\toolbox\\templates",
+    "\\toolbox\\templates\\toolbox",
+    "\\webapps"
+  ],
+  "SelectedNode": "\\webapps\\settings.py",
+  "PreviewInSolutionExplorer": false
+}
