@@ -3,8 +3,8 @@ import csv
 
 # Create s3 bucket
 s3 = boto3.resource('s3', 
-                    aws_access_key_id='AKIASNFLMCGY4I6QXGFN', 
-                    aws_secret_access_key='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')
+                    aws_access_key_id='something', 
+                    aws_secret_access_key='something')
 
 #try:
 #    s3.create_bucket(Bucket='database-14848hw3', CreateBucketConfiguration={'LocationConstraint': 'us-west-2'})
@@ -23,8 +23,8 @@ s3 = boto3.resource('s3',
 
 # Create DynamoDB table
 dyndb = boto3.resource('dynamodb', region_name='us-west-2',
-                       aws_access_key_id='AKIASNFLMCGY4I6QXGFN', 
-                    aws_secret_access_key='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')
+                       aws_access_key_id='something', 
+                    aws_secret_access_key='/something')
 
 #try:
 #    table = dyndb.create_table(
