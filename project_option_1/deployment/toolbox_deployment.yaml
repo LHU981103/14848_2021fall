@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controller
+  labels:
+    app: controller
+  namespace: project
+spec:
+  selector:
+    matchLabels:
+      app: controller
+    
+  replicas: 1
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: 
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: controller
+    spec:
+      containers:
+        - image: lhu98jes/big-data-processing-toolbox:latest
+          imagePullPolicy: IfNotPresent
+          name: controller
+          ports:
+            - containerPort: 8000

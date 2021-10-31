@@ -1,0 +1,200 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hadoop
+  labels:
+    app: hadoop-namenode
+  namespace: project
+spec:
+  selector:
+    matchLabels:
+      app: hadoop-namenode
+    
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: 
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: hadoop-namenode
+    spec:
+      containers:
+      - image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+        imagePullPolicy: IfNotPresent
+        name: hadoop-namenode
+        ports:
+          - containerPort: 9870
+        env: 
+          - name: SERVICE_PRECONDITION
+            value: "namenode:9870"
+          - name: CORE_CONF_fs_defaultFS
+            value: "hdfs://namenode:9000"
+          - name: CORE_CONF_hadoop_http_staticuser_user
+            value: "root"
+          - name: CORE_CONF_hadoop_proxyuser_hue_hosts
+            value: "*"
+          - name: CORE_CONF_hadoop_proxyuser_hue_groups
+            value: "*"
+          - name: CORE_CONF_io_compression_codecs
+            value: "org.apache.hadoop.io.compress.SnappyCodec"
+          - name: HDFS_CONF_dfs_webhdfs_enabled
+            value: "true"
+          - name: HDFS_CONF_dfs_permissions_enabled
+            value: "false"
+          - name: HDFS_CONF_dfs_namenode_datanode_registration_ip___hostname___check
+            value: "false"
+          - name: YARN_CONF_yarn_log___aggregation___enable
+            value: "true"
+          - name: YARN_CONF_yarn_log_server_url
+            value: "http://historyserver:8188/applicationhistory/logs/"
+          - name: YARN_CONF_yarn_resourcemanager_recovery_enabled
+            value: "true"
+          - name: YARN_CONF_yarn_resourcemanager_store_class
+            value: "org.apache.hadoop.yarn.server.resourcemanager.recovery.FileSystemRMStateStore"
+          - name: YARN_CONF_yarn_resourcemanager_scheduler_class
+            value: "org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler"
+          - name: YARN_CONF_yarn_scheduler_capacity_root_default_maximum___allocation___mb
+            value: "8192"
+          - name: YARN_CONF_yarn_scheduler_capacity_root_default_maximum___allocation___vcores
+            value: "4"
+          - name: YARN_CONF_yarn_timeline___service_enabled
+            value: "true"
+          - name: YARN_CONF_yarn_timeline___service_generic___application___history_enabled
+            value: "true"
+          - name: YARN_CONF_yarn_timeline___service_hostname
+            value: "historyserver"
+          - name: YARN_CONF_mapreduce_map_output_compress
+            value: "true"
+          - name: YARN_CONF_mapred_map_output_compress_codec
+            value: "org.apache.hadoop.io.compress.SnappyCodec"
+          - name: YARN_CONF_yarn_nodemanager_resource_memory___mb
+            value: "16384"
+          - name: YARN_CONF_yarn_nodemanager_resource_cpu___vcores
+            value: "8"
+          - name: YARN_CONF_yarn_nodemanager_disk___health___checker_max___disk___utilization___per___disk___percentage
+            value: "98.5"
+          - name: YARN_CONF_yarn_nodemanager_remote___app___log___dir
+            value: "/app-logs"
+          - name: YARN_CONF_yarn_nodemanager_aux___services
+            value: "mapreduce_shuffle"
+          - name: MAPRED_CONF_mapreduce_framework_name
+            value: "yarn"
+          - name: MAPRED_CONF_mapred_child_java_opts
+            value: "-Xmx4096m"
+          - name: MAPRED_CONF_mapreduce_map_memory_mb
+            value: "4096"
+          - name: MAPRED_CONF_mapreduce_reduce_memory_mb
+            value: "8192"
+          - name: MAPRED_CONF_mapreduce_map_java_opts
+            value: "-Xmx3072m"
+          - name: MAPRED_CONF_mapreduce_reduce_java_opts
+            value: "-Xmx6144m"
+          - name: MAPRED_CONF_yarn_app_mapreduce_am_env
+            value: "HADOOP_MAPRED_HOME/opt/hadoop-3.2.1/"
+          - name: MAPRED_CONF_mapreduce_map_env
+            value: "HADOOP_MAPRED_HOME/opt/hadoop-3.2.1/"
+          - name: MAPRED_CONF_mapreduce_reduce_env
+            value: "HADOOP_MAPRED_HOME/opt/hadoop-3.2.1/"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hadoop-datanode
+  labels:
+    app: hadoop-datanode
+  namespace: project
+spec:
+  selector:
+    matchLabels:
+      app: hadoop-datanode
+    
+  replicas: 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: 
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: hadoop-datanode
+    spec:
+      containers:
+        - image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+          imagePullPolicy: IfNotPresent
+          name: hadoop-datanode
+          env: 
+          - name: SERVICE_PRECONDITION
+            value: "namenode:9870"
+          - name: CORE_CONF_fs_defaultFS
+            value: "hdfs://namenode:9000"
+          - name: CORE_CONF_hadoop_http_staticuser_user
+            value: "root"
+          - name: CORE_CONF_hadoop_proxyuser_hue_hosts
+            value: "*"
+          - name: CORE_CONF_hadoop_proxyuser_hue_groups
+            value: "*"
+          - name: CORE_CONF_io_compression_codecs
+            value: "org.apache.hadoop.io.compress.SnappyCodec"
+          - name: HDFS_CONF_dfs_webhdfs_enabled
+            value: "true"
+          - name: HDFS_CONF_dfs_permissions_enabled
+            value: "false"
+          - name: HDFS_CONF_dfs_namenode_datanode_registration_ip___hostname___check
+            value: "false"
+          - name: YARN_CONF_yarn_log___aggregation___enable
+            value: "true"
+          - name: YARN_CONF_yarn_log_server_url
+            value: "http://historyserver:8188/applicationhistory/logs/"
+          - name: YARN_CONF_yarn_resourcemanager_recovery_enabled
+            value: "true"
+          - name: YARN_CONF_yarn_resourcemanager_store_class
+            value: "org.apache.hadoop.yarn.server.resourcemanager.recovery.FileSystemRMStateStore"
+          - name: YARN_CONF_yarn_resourcemanager_scheduler_class
+            value: "org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler"
+          - name: YARN_CONF_yarn_scheduler_capacity_root_default_maximum___allocation___mb
+            value: "8192"
+          - name: YARN_CONF_yarn_scheduler_capacity_root_default_maximum___allocation___vcores
+            value: "4"
+          - name: YARN_CONF_yarn_timeline___service_enabled
+            value: "true"
+          - name: YARN_CONF_yarn_timeline___service_generic___application___history_enabled
+            value: "true"
+          - name: YARN_CONF_yarn_timeline___service_hostname
+            value: "historyserver"
+          - name: YARN_CONF_mapreduce_map_output_compress
+            value: "true"
+          - name: YARN_CONF_mapred_map_output_compress_codec
+            value: "org.apache.hadoop.io.compress.SnappyCodec"
+          - name: YARN_CONF_yarn_nodemanager_resource_memory___mb
+            value: "16384"
+          - name: YARN_CONF_yarn_nodemanager_resource_cpu___vcores
+            value: "8"
+          - name: YARN_CONF_yarn_nodemanager_disk___health___checker_max___disk___utilization___per___disk___percentage
+            value: "98.5"
+          - name: YARN_CONF_yarn_nodemanager_remote___app___log___dir
+            value: "/app-logs"
+          - name: YARN_CONF_yarn_nodemanager_aux___services
+            value: "mapreduce_shuffle"
+          - name: MAPRED_CONF_mapreduce_framework_name
+            value: "yarn"
+          - name: MAPRED_CONF_mapred_child_java_opts
+            value: "-Xmx4096m"
+          - name: MAPRED_CONF_mapreduce_map_memory_mb
+            value: "4096"
+          - name: MAPRED_CONF_mapreduce_reduce_memory_mb
+            value: "8192"
+          - name: MAPRED_CONF_mapreduce_map_java_opts
+            value: "-Xmx3072m"
+          - name: MAPRED_CONF_mapreduce_reduce_java_opts
+            value: "-Xmx6144m"
+          - name: MAPRED_CONF_yarn_app_mapreduce_am_env
+            value: "HADOOP_MAPRED_HOME/opt/hadoop-3.2.1/"
+          - name: MAPRED_CONF_mapreduce_map_env
+            value: "HADOOP_MAPRED_HOME/opt/hadoop-3.2.1/"
+          - name: MAPRED_CONF_mapreduce_reduce_env
+            value: "HADOOP_MAPRED_HOME/opt/hadoop-3.2.1/"

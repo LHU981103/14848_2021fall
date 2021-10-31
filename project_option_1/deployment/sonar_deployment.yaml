@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonar
+  labels:
+    app: sonar
+  namespace: project
+spec:
+  selector:
+    matchLabels:
+      app: sonar
+    
+  replicas: 1
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: 
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: sonar
+    spec:
+      containers:
+        - image: lhu98jes/proj-sonarqube-scanner:latest
+          imagePullPolicy: IfNotPresent
+          name: sonarqube
+          ports:
+            - containerPort: 9000
