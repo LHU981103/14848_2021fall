@@ -8,6 +8,6 @@
     "\\toolbox\\templates\\toolbox",
     "\\webapps"
   ],
-  "SelectedNode": "\\webapps\\settings.py",
+  "SelectedNode": "\\toolbox\\views.py",
   "PreviewInSolutionExplorer": false
 }

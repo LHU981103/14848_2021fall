@@ -1,0 +1,48 @@
+Docker Images:
+
+Toolbox: lhu98jes/big-data-processing-toolbox
+
+Hadoop: - namenode: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+		- datanode: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+
+Spark: bitnami/spark
+
+Jupyter Notebook: lhu98jes/proj-jupyter
+
+Sonarqube: lhu98jes/proj-sonarqube-scanner
+
+
+
+Step by step:
+
+1. Build, push, and run docker image for controller
+
+	docker build -f Dockerfile -t lhu98jes/big-data-processing-toolbox .
+	docker push lhu98jes/big-data-processing-toolbox
+	docker run -d -p 8000:8000 lhu98jes/big-data-processing-toolbox
+
+2. Build, push and run docker image for jupyter notebook
+
+	docker build -f Dockerfile -t lhu98jes/proj-jupyter .
+	docker push lhu98jes/proj-jupyter
+	docker run -p 8888:8888 lhu98jes/proj-jupyter
+
+3. Build, push and run docker image for sonarqube
+
+	docker build -f Dockerfile -t lhu98jes/proj-sonarqube-scanner .
+	docker push lhu98jes/proj-sonarqube-scanner
+	docker run -d -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 lhu98jes/proj-sonarqube-scanner
+	(login&password:admin)
+
+4. Pull and run docker image for spark
+
+	docker pull bitnami/spark
+	docker run -d --name spark -e SPARK_MODE=master bitnami/spark
+
+5. Pull and set up hadoop cluster with one master node and two worker nodes
+	
+	Go to Hadoop folder, and do "docker-compose up"
+
+Reference:
+
+	https://techexpert.tips/sonarqube/sonarqube-scanner-installation-ubuntu-linux/
