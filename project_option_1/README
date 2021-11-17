@@ -13,7 +13,7 @@ Sonarqube: lhu98jes/proj-sonarqube-scanner
 
 
 
-Step by step:
+Docker Images Usage:
 
 1. Build, push, and run docker image for controller
 
@@ -46,3 +46,15 @@ Step by step:
 Reference:
 
 	https://techexpert.tips/sonarqube/sonarqube-scanner-installation-ubuntu-linux/
+	
+
+Deployment:
+
+kubectl create ns project
+kubectl apply -f hadoop_deployment.yaml
+kubectl apply -f sonar_deployment.yaml
+kubectl apply -f spark_deployment.yaml
+kubectl apply -f jupyter_notebook_deployment.yaml
+kubectl apply -f toolbox_deployment.yaml
+kubectl apply -f load_balancer_deployment.yaml
+kubectl apply -f services_deployment.yaml
