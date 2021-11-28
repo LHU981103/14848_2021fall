@@ -11,7 +11,8 @@ Jupyter Notebook: lhu98jes/proj-jupyter
 
 Sonarqube: lhu98jes/proj-sonarqube-scanner
 
-
+docker pull lhu98jes/big-data-processing-toolbox
+docker tag lhu98jes/big-data-processing-toolbox gcr.io/caramel-aria-325416/lhu98jes/big-data-processing-toolbox
 
 Docker Images Usage:
 
@@ -32,7 +33,7 @@ Docker Images Usage:
 	docker build -f Dockerfile -t lhu98jes/proj-sonarqube-scanner .
 	docker push lhu98jes/proj-sonarqube-scanner
 	docker run -d -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 lhu98jes/proj-sonarqube-scanner
-	(login&password:admin)
+	(login&password:admin; or login: admin, password: admin1)
 
 4. Pull and run docker image for spark
 
@@ -50,11 +51,29 @@ Reference:
 
 Deployment:
 
-kubectl create ns project
-kubectl apply -f hadoop_deployment.yaml
-kubectl apply -f sonar_deployment.yaml
-kubectl apply -f spark_deployment.yaml
-kubectl apply -f jupyter_notebook_deployment.yaml
-kubectl apply -f toolbox_deployment.yaml
-kubectl apply -f load_balancer_deployment.yaml
-kubectl apply -f services_deployment.yaml
+1. kubectl create ns project
+
+2. For Sonar, Spark, and Jupyter:
+
+	kubectl apply -f sonar_deployment.yaml
+	kubectl apply -f spark_deployment.yaml
+	kubectl apply -f jupyter_notebook_deployment.yaml
+	kubectl apply -f services_deployment.yaml
+
+3. For Hadoop:
+	
+	Manually deploy namenode and datanode, following demo in class
+
+4. Once have all the external IPs for all services, update in toolbox's code (views.py)
+
+5. Push docker image for toolbox
+
+6. Deploy toolbox:
+
+	kubectl apply -f toolbox_deployment.yaml
+	kubectl apply -f load_balancer_deployment.yaml
+
+7. Once have the external IP for toolbox, we add this IP in settings.py, and then push it to Docker as lhu98jes/big-data-processing-toolbox:deploy
+
+8. Pull the "deploy" version in GCP, and have the service point to the new version of toolbox image
+
