@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hadoop
+  name: namenode
   labels:
     app: hadoop-namenode
   namespace: project

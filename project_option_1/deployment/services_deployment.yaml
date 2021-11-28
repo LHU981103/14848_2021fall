@@ -4,6 +4,7 @@ metadata:
   name: spark-service
   namespace: project
 spec:
+  type: LoadBalancer
   ports:
   - port: 8080
     targetPort: 8080
@@ -16,6 +17,7 @@ metadata:
   name: sonar-service
   namespace: project
 spec:
+  type: LoadBalancer
   ports:
   - port: 9000
     targetPort: 9000
@@ -28,20 +30,9 @@ metadata:
   name: jupyter-service
   namespace: project
 spec:
+  type: LoadBalancer
   ports:
   - port: 8888
     targetPort: 8888
   selector:
     app: jupyter
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: hadoop-service
-  namespace: project
-spec:
-  ports:
-  - port: 9870
-    targetPort: 9870
-  selector:
-    app: hadoop-namenode

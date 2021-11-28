@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 
-APACHE_HADOOP_URL= "https://hadoop.apache.org/"
-APACHE_SPARK_URL= "https://en.wikipedia.org/wiki/Apache_Spark"
-JUPYTER_NOTEBOOK_URL= "http://localhost:8888"
-SONARQUBE_URL= "http://localhost:9000"
+APACHE_HADOOP_URL= "http://35.222.116.101:9870"
+APACHE_SPARK_URL= "http://34.66.239.17:8080"
+JUPYTER_NOTEBOOK_URL= "http://34.66.245.121:8888"
+SONARQUBE_URL= "http://34.66.14.55:9000"
 
 
 # Create your views here.
